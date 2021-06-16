@@ -103,8 +103,6 @@ __pypackages__/
 # Celery stuff
 celerybeat-schedule
 celerybeat.pid
-
-credentials.json
 token.json
 
 # SageMath parsed files

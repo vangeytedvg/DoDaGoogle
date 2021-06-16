@@ -34,8 +34,10 @@ def main():
 
     # Call the Drive v3 API
     # The q="mimeType='application/vnd.google-apps.folder'" only retrieves folders, not files
+    # in the field we map the fields we want to access afterwards in the details
     results = service.files().list(q="mimeType='application/vnd.google-apps.folder'",
-        pageSize=100, fields="nextPageToken, files(id, name, kind)").execute()
+                                   pageSize=100,
+                                   fields="nextPageToken, files(id, name, kind, mimeType, trashed, createdTime)").execute()
     items = results.get('files', [])
 
     if not items:
@@ -43,13 +45,20 @@ def main():
     else:
         print('Files:')
         for item in items:
-            print(f"{item['name']}, {item['id']}, {item['kind']}")
+            # fields from the mapping above
+            print(
+                f"{item['name']}, "
+                f"{item['id']}, "
+                f"{item['kind']}, "
+                f"{item['mimeType']}, "
+                f"{item['trashed']}, "
+                f"{item['createdTime']}")
 
     # This gets the files for the 'backup' directory (hence the id)
     response = service.files().list(
         q=f"parents = '1B9hpSN8OkfIJdgNTU3ApTbXyJfmZnA02'",
         spaces='drive',
-        fields='nextPageToken, files(id, name)',
+        fields='nextPageToken, files(id, name, kind, mimeType, trashed, createdTime)',
         pageToken=None).execute()
     items = response.get('files', [])
 
@@ -58,7 +67,12 @@ def main():
     else:
         print('Files:')
         for item in items:
-            print(u'{0} ({1})'.format(item['name'], item['id']))
+            print(f"{item['name']}, "
+                  f"{item['id']}, "
+                  f"{item['kind']}, "
+                  f"{item['mimeType']}, "
+                  f"{item['trashed']}, "
+                  f"{item['createdTime']}")
 
 
 if __name__ == '__main__':
