@@ -35,7 +35,7 @@ def main():
     # Call the Drive v3 API
     # The q="mimeType='application/vnd.google-apps.folder'" only retrieves folders, not files
     results = service.files().list(q="mimeType='application/vnd.google-apps.folder'",
-        pageSize=100, fields="nextPageToken, files(id, name)").execute()
+        pageSize=100, fields="nextPageToken, files(id, name, kind)").execute()
     items = results.get('files', [])
 
     if not items:
@@ -43,7 +43,7 @@ def main():
     else:
         print('Files:')
         for item in items:
-            print(u'{0} ({1})'.format(item['name'], item['id']))
+            print(f"{item['name']}, {item['id']}, {item['kind']}")
 
     # This gets the files for the 'backup' directory (hence the id)
     response = service.files().list(
