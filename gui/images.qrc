@@ -1,0 +1,11 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>diskette.png</file>
+    <file>edit.png</file>
+    <file>folder-12.png</file>
+    <file>folder.png</file>
+    <file>main_ui.ui</file>
+    <file>poweroff.png</file>
+    <file>recycle-bin.png</file>
+  </qresource>
+</RCC>

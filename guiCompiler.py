@@ -59,7 +59,7 @@ def compile_resources(location="."):
             # get the filename without extension
             base_filename, _ = os.path.splitext(os.path.basename(qrc_file))
             # Make the target name
-            target_filename = f"{base_filename}.py"
+            target_filename = f"{base_filename}_rc.py"
             # Run!
             result = subprocess.run(["pyrcc5", "-o", target_filename, f"{location}/{qrc_file}"], capture_output=True)
             if result.returncode == 0:
@@ -74,12 +74,12 @@ def compile_resources(location="."):
 
 if __name__ == "__main__":
     # Forms
-    res_ok, res_ko = compile_ui(prefix="frm", location=".")
+    res_ok, res_ko = compile_ui(prefix="frm", location="./gui/")
     print("Form Compilation terminated!")
     print(f"{res_ok} ui files converted without error")
     print(f"{res_ko} ui files contain errors")
     # Resources
-    res_ok, res_ko = compile_resources(location=".")
+    res_ok, res_ko = compile_resources(location="./gui/")
     print("Form Compilation terminated!")
     print(f"{res_ok} resource file(s) converted without error")
     print(f"{res_ko} resource file(s) contain errors")

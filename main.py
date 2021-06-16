@@ -47,7 +47,9 @@ def main():
         for item in items:
             # fields from the mapping above
             zen = item['owners']
+            # Get specific information from the owners field (wich is a list)
             print(zen[0]['displayName'])
+            print(zen[0]['kind'])
             print(
                 f"{item['name']}, "
                 f"{item['id']}, "
