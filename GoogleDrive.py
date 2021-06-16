@@ -34,7 +34,7 @@ class GoogleDrive:
 
         self.service = build('drive', 'v3', credentials=self.creds)
 
-    def get_drive_folders(self, pagesize: int):
+    def get_drive_folders(self, pagesize: int) -> list:
         # The q="mimeType='application/vnd.google-apps.folder'" only retrieves folders, not files
         # in the field we map the fields we want to access afterwards in the details
         results = self.service.files().list(q="mimeType='application/vnd.google-apps.folder'",
@@ -43,9 +43,9 @@ class GoogleDrive:
         items = results.get('files', [])
 
         if not items:
-            print('No files found.')
+            return
         else:
-            print('Files:')
+            folder_list = []
             for item in items:
                 zen = item['owners']
                 folder_details = {
@@ -54,6 +54,7 @@ class GoogleDrive:
                     'fileid': item['id'],
                     'filename': item['name'],
                 }
+                folder_list.append(folder_details)
                 # fields from the mapping above
                 print(
                     f"{item['name']}, "
@@ -64,26 +65,24 @@ class GoogleDrive:
                     f"{item['owners']}, "
                     f"{item['createdTime']}")
 
-    # This gets the files for the 'backup' directory (hence the id)
-    response = service.files().list(
-        q=f"parents = '1B9hpSN8OkfIJdgNTU3ApTbXyJfmZnA02'",
-        spaces='drive',
-        fields='nextPageToken, files(id, name, kind, mimeType, trashed, createdTime)',
-        pageToken=None).execute()
-    items = response.get('files', [])
+    def get_files_in_folder(self, folder_id: int) -> list:
+        # This gets the files for the 'backup' directory (hence the id)
+        # '1B9hpSN8OkfIJdgNTU3ApTbXyJfmZnA02'
+        response = self.service.files().list(
+            q=f"parents = {folder_id}",
+            spaces='drive',
+            fields='nextPageToken, files(id, name, kind, mimeType, trashed, createdTime)',
+            pageToken=None).execute()
+        items = response.get('files', [])
 
-    if not items:
-        print('No files found.')
-    else:
-        print('Files:')
-        for item in items:
-            print(f"{item['name']}, "
-                  f"{item['id']}, "
-                  f"{item['kind']}, "
-                  f"{item['mimeType']}, "
-                  f"{item['trashed']}, "
-                  f"{item['createdTime']}")
-
-
-if __name__ == '__main__':
-    main()
+        if not items:
+            print('No files found.')
+        else:
+            print('Files:')
+            for item in items:
+                print(f"{item['name']}, "
+                      f"{item['id']}, "
+                      f"{item['kind']}, "
+                      f"{item['mimeType']}, "
+                      f"{item['trashed']}, "
+                      f"{item['createdTime']}")
