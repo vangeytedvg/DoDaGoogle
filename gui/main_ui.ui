@@ -45,15 +45,20 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionE_xit"/>
   </widget>
   <action name="actionE_xit">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/poweroff.png</normaloff>:/icons/poweroff.png</iconset>
+   </property>
    <property name="text">
     <string>E&amp;xit</string>
    </property>
   </action>
  </widget>
  <resources>
-  <include location="../images.qrc"/>
+  <include location="images.qrc"/>
  </resources>
  <connections/>
 </ui>
