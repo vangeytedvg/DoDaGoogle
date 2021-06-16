@@ -37,7 +37,7 @@ def main():
     # in the field we map the fields we want to access afterwards in the details
     results = service.files().list(q="mimeType='application/vnd.google-apps.folder'",
                                    pageSize=100,
-                                   fields="nextPageToken, files(id, name, kind, mimeType, trashed, createdTime)").execute()
+                                   fields="nextPageToken, files(id, name, kind, mimeType, trashed, createdTime, owners)").execute()
     items = results.get('files', [])
 
     if not items:
@@ -46,12 +46,15 @@ def main():
         print('Files:')
         for item in items:
             # fields from the mapping above
+            zen = item['owners']
+            print(zen[0]['displayName'])
             print(
                 f"{item['name']}, "
                 f"{item['id']}, "
                 f"{item['kind']}, "
                 f"{item['mimeType']}, "
                 f"{item['trashed']}, "
+                f"{item['owners']}, "
                 f"{item['createdTime']}")
 
     # This gets the files for the 'backup' directory (hence the id)
