@@ -11,7 +11,9 @@
     <file>edit.png</file>
     <file>folder-12.png</file>
     <file>folder.png</file>
-    <file>main_ui.ui</file>
     <file>recycle-bin.png</file>
+    <file>application-zip.png</file>
+    <file>video-mp4.png</file>
+    <file>application-vnd.google-apps.folder.png</file>
   </qresource>
 </RCC>
