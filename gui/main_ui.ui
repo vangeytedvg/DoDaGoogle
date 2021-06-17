@@ -68,6 +68,9 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
    <property name="iconSize">
     <size>
      <width>48</width>

@@ -26,11 +26,13 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
 
     def handle_item_doubleclicked(self):
         zen = self.googleDriveList.currentItem()
+        # Check if we have an instance of the DodaListItem class
         if type(zen).__name__ == "DodaListItem":
             doda = GoogleDrive()
             self._folders = doda.get_files_in_folder(zen.fileid)
             for folder in self._folders:
                 ic = QIcon()
+                print(folder['trashed'])
                 ic.addPixmap(QPixmap(':/icons/Places-folder-green-icon'))
                 ploink = DodaListItem.DodaListItem(owner_name=folder['owner_name'],
                                                    owner_kind=folder['owner_kind'],
@@ -46,12 +48,15 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
 
     def handle_item_clicked(self):
         zen = self.googleDriveList.currentItem()
+        # If it is an instance of DodaListItem, we can get the enriched
+        # information from it.
         if type(zen).__name__ == "DodaListItem":
             print(zen.owner_name)
             print(zen.owner_kind)
             print(zen.filename)
             print(zen.trashed)
             print(zen.fileid)
+            print(zen.mime_type)
 
     def bind_actions(self):
         """
@@ -67,7 +72,8 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         Load the folders from Google Drive
         """
         doda = GoogleDrive()
-        self._folders = doda.get_drive_folders(500)
+        # self._folders = doda.get_drive_folders(500)
+        self._folders = doda.get_files_in_folder(folder_id='')
         # Retrieve the folders in the root for the moment
         for folder in self._folders:
             ic = QIcon()

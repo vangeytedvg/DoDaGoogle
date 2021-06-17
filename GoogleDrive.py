@@ -64,11 +64,18 @@ class GoogleDrive:
     def get_files_in_folder(self, folder_id: str) -> list:
         # This gets the files for the 'backup' directory (hence the id)
         # '1B9hpSN8OkfIJdgNTU3ApTbXyJfmZnA02'
-        response = self.service.files().list(
-            q=f"parents = '{folder_id}'",
-            spaces='drive',
-            fields='nextPageToken, files(id, name, kind, mimeType, trashed, createdTime, owners)',
-            pageToken=None).execute()
+        if folder_id:
+            response = self.service.files().list(
+                q=f"parents = '{folder_id}'",
+                spaces='drive',
+                fields='nextPageToken, files(id, name, kind, mimeType, trashed, createdTime, owners)',
+                pageToken=None).execute()
+        else:
+            response = self.service.files().list(
+                # q=f"parents = '{folder_id}'",
+                spaces='drive',
+                fields='nextPageToken, files(id, name, kind, mimeType, trashed, createdTime, owners)',
+                pageToken=None).execute()
         items = response.get('files', [])
 
         folder_list = []
