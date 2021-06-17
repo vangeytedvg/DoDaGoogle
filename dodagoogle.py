@@ -1,4 +1,7 @@
-from PyQt5 import QtWidgets, QtGui, Qt
+from PyQt5.QtWidgets import (QListWidget,
+                             QListWidgetItem,
+                             QMainWindow, QApplication)
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import QByteArray, QSettings
 
 from frmMain_ui import Ui_MainWindow
@@ -6,7 +9,12 @@ from utilities.setting import Settings
 from GoogleDrive import GoogleDrive
 
 
-class DodaGoogle (QtWidgets.QMainWindow, Ui_MainWindow):
+class DodaListItem(QListWidgetItem):
+    def __init__(self):
+        super(DodaListItem, self).__init__()
+
+
+class DodaGoogle(QMainWindow, Ui_MainWindow):
 
     def __init__(self):
         super(DodaGoogle, self).__init__()
@@ -32,9 +40,16 @@ class DodaGoogle (QtWidgets.QMainWindow, Ui_MainWindow):
         self._folders = doda.get_drive_folders(500)
         # Retrieve the folders in the root for the moment
         for folder in self._folders:
-            print(folder['filename'])
+            ic = QIcon()
+            ic.addPixmap(QPixmap(':/icons/diskette'))
+            ploink = DodaListItem()
+            ploink.setText(folder['filename'])
+            ploink.setIcon(ic)
+            self.googleDriveList.addItem(ploink)
+
 
     """ Settings Section """
+
     def closeEvent(self, event):
         """
           Overrides the base close event
@@ -48,7 +63,6 @@ class DodaGoogle (QtWidgets.QMainWindow, Ui_MainWindow):
     def savesettings(self):
         """
           Save settings to the registry (windows) or setting file (linux)
-        :return: nothing
         """
         settings = QSettings("DenkaTech", "DodaGoogle")
         settings.beginGroup("mainwindow")
@@ -59,9 +73,8 @@ class DodaGoogle (QtWidgets.QMainWindow, Ui_MainWindow):
     def loadsettings(self):
         """
           Load the settings from the registry (windows) or settings file (linux)
-        :return: nothing
         """
-        # -- > this part needs to be migrated to the Settings class
+        # --> this part needs to be migrated to the Settings class
         settings = QSettings("DenkaTech", "DodaGoogle")
         settings.beginGroup("mainwindow")
         self.restoreState(settings.value("frm_main/state", QByteArray()))
@@ -71,7 +84,8 @@ class DodaGoogle (QtWidgets.QMainWindow, Ui_MainWindow):
 
 if __name__ == '__main__':
     import sys
-    app = QtWidgets.QApplication(sys.argv)
+
+    app = QApplication(sys.argv)
     main_form = DodaGoogle()
     main_form.show()
     sys.exit(app.exec_())
