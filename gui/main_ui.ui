@@ -24,7 +24,7 @@
        <set>QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked|QAbstractItemView::SelectedClicked</set>
       </property>
       <property name="dragDropMode">
-       <enum>QAbstractItemView::NoDragDrop</enum>
+       <enum>QAbstractItemView::DragDrop</enum>
       </property>
       <property name="defaultDropAction">
        <enum>Qt::IgnoreAction</enum>
@@ -68,6 +68,15 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>48</width>
+     <height>48</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -80,7 +89,7 @@
   <action name="actionE_xit">
    <property name="icon">
     <iconset resource="images.qrc">
-     <normaloff>:/icons/poweroff.png</normaloff>:/icons/poweroff.png</iconset>
+     <normaloff>:/icons/close.png</normaloff>:/icons/close.png</iconset>
    </property>
    <property name="text">
     <string>E&amp;xit</string>
@@ -89,10 +98,10 @@
   <action name="actionLoad_Files">
    <property name="icon">
     <iconset resource="images.qrc">
-     <normaloff>:/icons/folder-12.png</normaloff>:/icons/folder-12.png</iconset>
+     <normaloff>:/icons/Network-icon.png</normaloff>:/icons/Network-icon.png</iconset>
    </property>
    <property name="text">
-    <string>Refresh</string>
+    <string>Load folders</string>
    </property>
   </action>
  </widget>

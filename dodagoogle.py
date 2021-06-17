@@ -11,21 +11,27 @@ from GoogleDrive import GoogleDrive
 
 class DodaListItem(QListWidgetItem):
     """
-    Sublassing QListWidgetItem so we can add some properties
-    we need.
-    'owner_name': zen[0]['displayName'],
-                    'owner_kind': zen[0]['kind'],
-                    'fileid': item['id'],
-                    'filename': item['name'],
-                    'file_kind': item['kind'],
-                    'mimeType': item['mimeType'],
-                    'trashed': item['trashed'],
-                    'createdTime': item['createdTime']
+        Sublassing QListWidgetItem so we can add some properties
+        we need.
     """
-    def __init__(self, owner_name, owner_kind, fileid, filename, file_kind, mimeType, trashed, createdTime):
+
+    def __init__(self, owner_name="",
+                 owner_kind="",
+                 fileid="",
+                 filename="",
+                 file_kind="",
+                 mime_type="",
+                 trashed="",
+                 created_time=""):
         super(DodaListItem, self).__init__()
-        self.owner_name = ownername
+        self.owner_name = owner_name
+        self.owner_kind = owner_kind
+        self.fileid = fileid
         self.filename = filename
+        self.file_kind = file_kind
+        self.mime_type = mime_type
+        self.trashed = trashed
+        self.created_time = created_time
 
 
 class DodaGoogle(QMainWindow, Ui_MainWindow):
@@ -40,11 +46,22 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
 
     def bind_controls(self):
         self.googleDriveList.itemClicked.connect(self.handle_item_clicked)
+        self.googleDriveList.itemDoubleClicked.connect(self.handle_item_doubleclicked)
+
+    def handle_item_doubleclicked(self):
+        zen = self.googleDriveList.currentItem()
+        if type(zen).__name__ == "DodaListItem":
+            doda = GoogleDrive()
+            self._folders = doda.get_files_in_folder(zen.fileid)
 
     def handle_item_clicked(self):
         zen = self.googleDriveList.currentItem()
         if type(zen).__name__ == "DodaListItem":
+            print(zen.owner_name)
+            print(zen.owner_kind)
             print(zen.filename)
+            print(zen.trashed)
+            print(zen.fileid)
 
     def bind_actions(self):
         """
@@ -64,13 +81,22 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         # Retrieve the folders in the root for the moment
         for folder in self._folders:
             ic = QIcon()
-            ic.addPixmap(QPixmap(':/icons/Places-folder-blue-icon'))
-            ploink = DodaListItem(folder['filename'])
+            ic.addPixmap(QPixmap(':/icons/Places-folder-green-icon'))
+            ploink = DodaListItem(owner_name=folder['owner_name'],
+                                  owner_kind=folder['owner_kind'],
+                                  fileid=folder['fileid'],
+                                  filename=folder['filename'],
+                                  file_kind=folder['file_kind'],
+                                  mime_type=folder['mime_type'],
+                                  trashed=folder['trashed'],
+                                  created_time=folder['created_time']
+                                  )
             ploink.setText(folder['filename'])
             ploink.setIcon(ic)
             self.googleDriveList.addItem(ploink)
 
     """------------------ Settings Section ------------------"""
+
     def closeEvent(self, event):
         """
           Overrides the base close event

@@ -1,12 +1,17 @@
 <RCC>
   <qresource prefix="icons">
+    <file>Places-folder-green-icon.png</file>
+    <file>close.png</file>
+    <file>Network-icon.png</file>
+    <file>aqua-trash-full-icon.png</file>
+    <file>aqua-trash-empty-icon.png</file>
+    <file>file.png</file>
     <file>Places-folder-blue-icon.png</file>
     <file>diskette.png</file>
     <file>edit.png</file>
     <file>folder-12.png</file>
     <file>folder.png</file>
     <file>main_ui.ui</file>
-    <file>poweroff.png</file>
     <file>recycle-bin.png</file>
   </qresource>
 </RCC>

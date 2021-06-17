@@ -54,18 +54,18 @@ class GoogleDrive:
                     'fileid': item['id'],
                     'filename': item['name'],
                     'file_kind': item['kind'],
-                    'mimeType': item['mimeType'],
+                    'mime_type': item['mimeType'],
                     'trashed': item['trashed'],
-                    'createdTime': item['createdTime']
+                    'created_time': item['createdTime']
                 }
                 folder_list.append(folder_details)
         return folder_list
 
-    def get_files_in_folder(self, folder_id: int) -> list:
+    def get_files_in_folder(self, folder_id: str) -> list:
         # This gets the files for the 'backup' directory (hence the id)
         # '1B9hpSN8OkfIJdgNTU3ApTbXyJfmZnA02'
         response = self.service.files().list(
-            q=f"parents = {folder_id}",
+            q=f"parents = '{folder_id}'",
             spaces='drive',
             fields='nextPageToken, files(id, name, kind, mimeType, trashed, createdTime, owners)',
             pageToken=None).execute()
@@ -84,9 +84,9 @@ class GoogleDrive:
                     'fileid': item['id'],
                     'filename': item['name'],
                     'file_kind': item['kind'],
-                    'mimeType': item['mimeType'],
+                    'mime_type': item['mimeType'],
                     'trashed': item['trashed'],
-                    'createdTime': item['createdTime']
+                    'created_time': item['createdTime']
                 }
                 folder_list.append(folder_details)
         return folder_list
