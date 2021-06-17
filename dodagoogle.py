@@ -7,31 +7,31 @@ from PyQt5.QtCore import QByteArray, QSettings
 from frmMain_ui import Ui_MainWindow
 from utilities.setting import Settings
 from GoogleDrive import GoogleDrive
+from CustomWidgets import DodaListItem
 
-
-class DodaListItem(QListWidgetItem):
-    """
-        Sublassing QListWidgetItem so we can add some properties
-        we need.
-    """
-
-    def __init__(self, owner_name="",
-                 owner_kind="",
-                 fileid="",
-                 filename="",
-                 file_kind="",
-                 mime_type="",
-                 trashed="",
-                 created_time=""):
-        super(DodaListItem, self).__init__()
-        self.owner_name = owner_name
-        self.owner_kind = owner_kind
-        self.fileid = fileid
-        self.filename = filename
-        self.file_kind = file_kind
-        self.mime_type = mime_type
-        self.trashed = trashed
-        self.created_time = created_time
+# class DodaListItem(QListWidgetItem):
+#     """
+#         Sublassing QListWidgetItem so we can add some properties
+#         we need.
+#     """
+#
+#     def __init__(self, owner_name="",
+#                  owner_kind="",
+#                  fileid="",
+#                  filename="",
+#                  file_kind="",
+#                  mime_type="",
+#                  trashed="",
+#                  created_time=""):
+#         super(DodaListItem, self).__init__()
+#         self.owner_name = owner_name
+#         self.owner_kind = owner_kind
+#         self.fileid = fileid
+#         self.filename = filename
+#         self.file_kind = file_kind
+#         self.mime_type = mime_type
+#         self.trashed = trashed
+#         self.created_time = created_time
 
 
 class DodaGoogle(QMainWindow, Ui_MainWindow):
@@ -82,7 +82,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         for folder in self._folders:
             ic = QIcon()
             ic.addPixmap(QPixmap(':/icons/Places-folder-green-icon'))
-            ploink = DodaListItem(owner_name=folder['owner_name'],
+            ploink = DodaListItem.DodaListItem(owner_name=folder['owner_name'],
                                   owner_kind=folder['owner_kind'],
                                   fileid=folder['fileid'],
                                   filename=folder['filename'],
