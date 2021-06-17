@@ -32,7 +32,9 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
             self._folders = doda.get_files_in_folder(zen.fileid)
             for folder in self._folders:
                 ic = QIcon()
-                print(folder['trashed'])
+                # Check what type of icon we have to use
+                icon_type=folder['mime_type']
+                if icon_type == "application/zip"
                 ic.addPixmap(QPixmap(':/icons/Places-folder-green-icon'))
                 ploink = DodaListItem.DodaListItem(owner_name=folder['owner_name'],
                                                    owner_kind=folder['owner_kind'],
