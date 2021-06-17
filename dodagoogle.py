@@ -26,32 +26,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
 
     def handle_item_doubleclicked(self):
         zen = self.googleDriveList.currentItem()
-        # Check if we have an instance of the DodaListItem class
-        if type(zen).__name__ == "DodaListItem":
-            self.googleDriveList.clear()
-            doda = GoogleDrive()
-            self._folders = doda.get_files_in_folder(zen.fileid)
-            for folder in self._folders:
-                ic = QIcon()
-                # Check what type of icon we have to use
-                icon_type = folder['mime_type']
-
-                # replace the / into -
-                new_icon_type = icon_type.replace("/", "-")
-                print("ICON", new_icon_type)
-                ic.addPixmap(QPixmap(f":/icons/{new_icon_type}"))
-
-                ploink = DodaListItem.DodaListItem(owner_name=folder['owner_name'],
-                                                   owner_kind=folder['owner_kind'],
-                                                   fileid=folder['fileid'],
-                                                   filename=folder['filename'],
-                                                   file_kind=folder['file_kind'],
-                                                   mime_type=folder['mime_type'],
-                                                   trashed=folder['trashed'],
-                                                   created_time=folder['created_time'])
-                ploink.setText(folder['filename'])
-                ploink.setIcon(ic)
-                self.googleDriveList.addItem(ploink)
+        self.get_drive_contents(zen.fileid)
 
     def handle_item_clicked(self):
         zen = self.googleDriveList.currentItem()
@@ -73,13 +48,10 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self.actionE_xit.triggered.connect(self.close)
         self.actionLoad_Files.triggered.connect(self.handle_load_files)
 
-    def handle_load_files(self):
-        """
-        Slot
-        Load the folders from Google Drive
-        """
+    def get_drive_contents(self, folder_id):
         doda = GoogleDrive()
-        self._folders = doda.get_files_in_folder(folder_id="")
+        self.googleDriveList.clear()
+        self._folders = doda.get_files_in_folder(folder_id=folder_id)
         for folder in self._folders:
             ic = QIcon()
             # Check what type of icon we have to use
@@ -88,9 +60,12 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
             # replace the / into -
             new_icon_type = icon_type.replace("/", "-")
             print("ICON", new_icon_type)
-            print(f"KWAK :/icons/{new_icon_type}")
-            # ic.addPixmap(QPixmap(f":/icons/{new_icon_type}"))
-            ic.addPixmap(QPixmap(":/icons/application-vnd.google-apps.folder"))
+            if new_icon_type == "application-vnd.google-apps.folder":
+                print("ZWABBER")
+                new_icon_type = "Places-folder-green-icon"
+
+            ic.addPixmap(QPixmap(f":/icons/{new_icon_type}"))
+
             ploink = DodaListItem.DodaListItem(owner_name=folder['owner_name'],
                                                owner_kind=folder['owner_kind'],
                                                fileid=folder['fileid'],
@@ -103,34 +78,16 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
             ploink.setIcon(ic)
             self.googleDriveList.addItem(ploink)
 
+    def handle_load_files(self):
+        """
+        Slot
+        Load the folders from Google Drive
+        """
+        zen = self.googleDriveList.currentItem()
+        self.get_drive_contents(folder_id="")
+
     def load_folder_contents(self, folder_id=''):
         self.handle_load_files()
-        # active_item = self.googleDriveList.currentItem()
-        # # Check if we have an instance of the DodaListItem class
-        # if type(active_item).__name__ == "DodaListItem":
-        #     doda = GoogleDrive()
-        #     self._folders = doda.get_files_in_folder(active_item.fileid)
-        #     for folder in self._folders:
-        #         ic = QIcon()
-        #         # Check what type of icon we have to use
-        #         icon_type = folder['mime_type']
-        #
-        #         # replace the / into -
-        #         new_icon_type = icon_type.replace("/", "-")
-        #         print("ICON", new_icon_type)
-        #         ic.addPixmap(QPixmap(f":/icons/{new_icon_type}"))
-        #
-        #         ploink = DodaListItem.DodaListItem(owner_name=folder['owner_name'],
-        #                                            owner_kind=folder['owner_kind'],
-        #                                            fileid=folder['fileid'],
-        #                                            filename=folder['filename'],
-        #                                            file_kind=folder['file_kind'],
-        #                                            mime_type=folder['mime_type'],
-        #                                            trashed=folder['trashed'],
-        #                                            created_time=folder['created_time'])
-        #         ploink.setText(folder['filename'])
-        #         ploink.setIcon(ic)
-        #         self.googleDriveList.addItem(ploink)
 
     """------------------ Settings Section ------------------"""
 
