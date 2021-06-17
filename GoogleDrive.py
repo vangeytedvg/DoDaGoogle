@@ -41,9 +41,9 @@ class GoogleDrive:
                                             pageSize=pagesize,
                                             fields="nextPageToken, files(id, name, kind, mimeType, trashed, createdTime, owners)").execute()
         items = results.get('files', [])
-
+        folder_list = []
         if not items:
-            return
+            return None
         else:
             folder_list = []
             for item in items:
@@ -53,17 +53,13 @@ class GoogleDrive:
                     'owner_kind': zen[0]['kind'],
                     'fileid': item['id'],
                     'filename': item['name'],
+                    'file_kind': item['kind'],
+                    'mimeType': item['mimeType'],
+                    'trashed': item['trashed'],
+                    'createdTime': item['createdTime']
                 }
                 folder_list.append(folder_details)
-                # fields from the mapping above
-                print(
-                    f"{item['name']}, "
-                    f"{item['id']}, "
-                    f"{item['kind']}, "
-                    f"{item['mimeType']}, "
-                    f"{item['trashed']}, "
-                    f"{item['owners']}, "
-                    f"{item['createdTime']}")
+        return folder_list
 
     def get_files_in_folder(self, folder_id: int) -> list:
         # This gets the files for the 'backup' directory (hence the id)
@@ -71,18 +67,26 @@ class GoogleDrive:
         response = self.service.files().list(
             q=f"parents = {folder_id}",
             spaces='drive',
-            fields='nextPageToken, files(id, name, kind, mimeType, trashed, createdTime)',
+            fields='nextPageToken, files(id, name, kind, mimeType, trashed, createdTime, owners)',
             pageToken=None).execute()
         items = response.get('files', [])
 
+        folder_list = []
         if not items:
-            print('No files found.')
+            return None
         else:
-            print('Files:')
+            folder_list = []
             for item in items:
-                print(f"{item['name']}, "
-                      f"{item['id']}, "
-                      f"{item['kind']}, "
-                      f"{item['mimeType']}, "
-                      f"{item['trashed']}, "
-                      f"{item['createdTime']}")
+                zen = item['owners']
+                folder_details = {
+                    'owner_name': zen[0]['displayName'],
+                    'owner_kind': zen[0]['kind'],
+                    'fileid': item['id'],
+                    'filename': item['name'],
+                    'file_kind': item['kind'],
+                    'mimeType': item['mimeType'],
+                    'trashed': item['trashed'],
+                    'createdTime': item['createdTime']
+                }
+                folder_list.append(folder_details)
+        return folder_list
