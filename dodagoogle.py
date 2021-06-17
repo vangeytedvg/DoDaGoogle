@@ -10,8 +10,22 @@ from GoogleDrive import GoogleDrive
 
 
 class DodaListItem(QListWidgetItem):
-    def __init__(self):
+    """
+    Sublassing QListWidgetItem so we can add some properties
+    we need.
+    'owner_name': zen[0]['displayName'],
+                    'owner_kind': zen[0]['kind'],
+                    'fileid': item['id'],
+                    'filename': item['name'],
+                    'file_kind': item['kind'],
+                    'mimeType': item['mimeType'],
+                    'trashed': item['trashed'],
+                    'createdTime': item['createdTime']
+    """
+    def __init__(self, owner_name, owner_kind, fileid, filename, file_kind, mimeType, trashed, createdTime):
         super(DodaListItem, self).__init__()
+        self.owner_name = ownername
+        self.filename = filename
 
 
 class DodaGoogle(QMainWindow, Ui_MainWindow):
@@ -21,7 +35,16 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.loadsettings()
         self.bind_actions()
+        self.bind_controls()
         self._folders = []
+
+    def bind_controls(self):
+        self.googleDriveList.itemClicked.connect(self.handle_item_clicked)
+
+    def handle_item_clicked(self):
+        zen = self.googleDriveList.currentItem()
+        if type(zen).__name__ == "DodaListItem":
+            print(zen.filename)
 
     def bind_actions(self):
         """
@@ -41,15 +64,13 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         # Retrieve the folders in the root for the moment
         for folder in self._folders:
             ic = QIcon()
-            ic.addPixmap(QPixmap(':/icons/diskette'))
-            ploink = DodaListItem()
+            ic.addPixmap(QPixmap(':/icons/Places-folder-blue-icon'))
+            ploink = DodaListItem(folder['filename'])
             ploink.setText(folder['filename'])
             ploink.setIcon(ic)
             self.googleDriveList.addItem(ploink)
 
-
-    """ Settings Section """
-
+    """------------------ Settings Section ------------------"""
     def closeEvent(self, event):
         """
           Overrides the base close event
