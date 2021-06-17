@@ -1,15 +1,19 @@
 from PyQt5 import QtWidgets, QtGui, Qt
 from PyQt5.QtCore import QByteArray, QSettings
+
 from frmMain_ui import Ui_MainWindow
 from utilities.setting import Settings
+from GoogleDrive import GoogleDrive
 
 
 class DodaGoogle (QtWidgets.QMainWindow, Ui_MainWindow):
+
     def __init__(self):
         super(DodaGoogle, self).__init__()
         self.setupUi(self)
         self.loadsettings()
         self.bind_actions()
+        self._folders = []
 
     def bind_actions(self):
         """
@@ -17,6 +21,18 @@ class DodaGoogle (QtWidgets.QMainWindow, Ui_MainWindow):
         :return:
         """
         self.actionE_xit.triggered.connect(self.close)
+        self.actionLoad_Files.triggered.connect(self.handle_load_files)
+
+    def handle_load_files(self):
+        """
+        Slot
+        Load the folders from Google Drive
+        """
+        doda = GoogleDrive()
+        self._folders = doda.get_drive_folders(500)
+        # Retrieve the folders in the root for the moment
+        for folder in self._folders:
+            print(folder['filename'])
 
     """ Settings Section """
     def closeEvent(self, event):
