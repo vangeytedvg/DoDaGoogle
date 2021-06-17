@@ -9,30 +9,6 @@ from utilities.setting import Settings
 from GoogleDrive import GoogleDrive
 from CustomWidgets import DodaListItem
 
-# class DodaListItem(QListWidgetItem):
-#     """
-#         Sublassing QListWidgetItem so we can add some properties
-#         we need.
-#     """
-#
-#     def __init__(self, owner_name="",
-#                  owner_kind="",
-#                  fileid="",
-#                  filename="",
-#                  file_kind="",
-#                  mime_type="",
-#                  trashed="",
-#                  created_time=""):
-#         super(DodaListItem, self).__init__()
-#         self.owner_name = owner_name
-#         self.owner_kind = owner_kind
-#         self.fileid = fileid
-#         self.filename = filename
-#         self.file_kind = file_kind
-#         self.mime_type = mime_type
-#         self.trashed = trashed
-#         self.created_time = created_time
-
 
 class DodaGoogle(QMainWindow, Ui_MainWindow):
 
@@ -53,6 +29,20 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         if type(zen).__name__ == "DodaListItem":
             doda = GoogleDrive()
             self._folders = doda.get_files_in_folder(zen.fileid)
+            for folder in self._folders:
+                ic = QIcon()
+                ic.addPixmap(QPixmap(':/icons/Places-folder-green-icon'))
+                ploink = DodaListItem.DodaListItem(owner_name=folder['owner_name'],
+                                                   owner_kind=folder['owner_kind'],
+                                                   fileid=folder['fileid'],
+                                                   filename=folder['filename'],
+                                                   file_kind=folder['file_kind'],
+                                                   mime_type=folder['mime_type'],
+                                                   trashed=folder['trashed'],
+                                                   created_time=folder['created_time'])
+                ploink.setText(folder['filename'])
+                ploink.setIcon(ic)
+                self.googleDriveList.addItem(ploink)
 
     def handle_item_clicked(self):
         zen = self.googleDriveList.currentItem()
@@ -83,14 +73,13 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
             ic = QIcon()
             ic.addPixmap(QPixmap(':/icons/Places-folder-green-icon'))
             ploink = DodaListItem.DodaListItem(owner_name=folder['owner_name'],
-                                  owner_kind=folder['owner_kind'],
-                                  fileid=folder['fileid'],
-                                  filename=folder['filename'],
-                                  file_kind=folder['file_kind'],
-                                  mime_type=folder['mime_type'],
-                                  trashed=folder['trashed'],
-                                  created_time=folder['created_time']
-                                  )
+                                               owner_kind=folder['owner_kind'],
+                                               fileid=folder['fileid'],
+                                               filename=folder['filename'],
+                                               file_kind=folder['file_kind'],
+                                               mime_type=folder['mime_type'],
+                                               trashed=folder['trashed'],
+                                               created_time=folder['created_time'])
             ploink.setText(folder['filename'])
             ploink.setIcon(ic)
             self.googleDriveList.addItem(ploink)
