@@ -70,7 +70,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "DoDa Google (GOneDrive)"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "DoDa Google"))
         self.googleDriveList.setSortingEnabled(False)
         self.menu_File.setTitle(_translate("MainWindow", "&File"))
         self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
