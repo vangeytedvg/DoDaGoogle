@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>Home Folder.png</file>
+    <file>folder_up.png</file>
     <file>Places-folder-green-icon.png</file>
     <file>close.png</file>
     <file>Network-icon.png</file>

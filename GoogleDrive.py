@@ -34,42 +34,12 @@ class GoogleDrive:
 
         self.service = build('drive', 'v3', credentials=self.creds)
 
-    # def get_drive_folders(self, pagesize: int) -> list:
-    #     """
-    #     depricated
-    #     :param pagesize:
-    #     :return:
-    #     """
-    #     # The q="mimeType='application/vnd.google-apps.folder'" only retrieves folders, not files
-    #     # in the field we map the fields we want to access afterwards in the details
-    #     results = self.service.files().list(q="mimeType='application/vnd.google-apps.folder'",
-    #                                         pageSize=pagesize,
-    #                                         fields="nextPageToken, files(id, name, kind, mimeType, trashed, createdTime, owners)").execute()
-    #     items = results.get('files', [])
-    #     folder_list = []
-    #     if not items:
-    #         return None
-    #     else:
-    #         folder_list = []
-    #         for item in items:
-    #             zen = item['owners']
-    #             folder_details = {
-    #                 'owner_name': zen[0]['displayName'],
-    #                 'owner_kind': zen[0]['kind'],
-    #                 'fileid': item['id'],
-    #                 'filename': item['name'],
-    #                 'file_kind': item['kind'],
-    #                 'mime_type': item['mimeType'],
-    #                 'trashed': item['trashed'],
-    #                 'created_time': item['createdTime']
-    #             }
-    #             folder_list.append(folder_details)
-    #     return folder_list
-    #
-
     def get_files_in_folder(self, folder_id: str) -> list:
-        # This gets the files for the 'backup' directory (hence the id)
-        # '1B9hpSN8OkfIJdgNTU3ApTbXyJfmZnA02'
+        """
+        Get the files in the specified folder
+        :param folder_id: The id of the selected folder
+        :return: List with dictionary of files found in the folder
+        """
         if folder_id:
             response = self.service.files().list(
                 q=f"parents = '{folder_id}'",
