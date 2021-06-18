@@ -29,7 +29,7 @@ class Ui_MainWindow(object):
         self.googleDriveList.setIconSize(QtCore.QSize(96, 96))
         self.googleDriveList.setResizeMode(QtWidgets.QListView.Adjust)
         self.googleDriveList.setViewMode(QtWidgets.QListView.IconMode)
-        self.googleDriveList.setUniformItemSizes(True)
+        self.googleDriveList.setUniformItemSizes(False)
         self.googleDriveList.setWordWrap(False)
         self.googleDriveList.setObjectName("googleDriveList")
         self.horizontalLayout.addWidget(self.googleDriveList)

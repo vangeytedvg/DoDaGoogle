@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>application-presentation.png</file>
     <file>Home Folder.png</file>
     <file>folder_up.png</file>
     <file>Places-folder-green-icon.png</file>
