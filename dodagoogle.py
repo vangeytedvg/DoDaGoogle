@@ -18,10 +18,11 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self.loadsettings()
         self.bind_actions()
         self.bind_controls()
-        self._folders = []
+
         # _active_folder is the variable used to keep track
         # of the last selected folder, this is used to go back for example
         self._active_folder = -1
+        self._folder_history = []
 
     def bind_controls(self):
         self.googleDriveList.itemClicked.connect(self.handle_item_clicked)
@@ -30,6 +31,8 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
     def handle_item_doubleclicked(self):
         zen = self.googleDriveList.currentItem()
         if zen.mime_type.endswith(".folder"):
+            # Add the selected folder to the history
+            self._folder_history.append(zen.fileid)
             self._active_folder = zen.fileid
             self.statusbar.showMessage(self._active_folder)
             self.get_drive_contents(zen.fileid)
@@ -82,7 +85,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
             # replace the / into -
             new_icon_type = icon_type.replace("/", "-")
             if new_icon_type == "application-vnd.google-apps.folder":
-                new_icon_type = "Places-folder-blue-icon"
+                new_icon_type = "Places-folder-green-icon"
 
             ic.addPixmap(QPixmap(f":/icons/{new_icon_type}"))
             # Contruct a new DodaListItem
