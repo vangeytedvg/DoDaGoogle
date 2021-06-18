@@ -79,13 +79,9 @@ class GoogleDrive:
         items = response.get('files', [])
 
         folder_list = []
-        if not items:
-            return None
-        else:
-            folder_list = []
-            for item in items:
-                zen = item['owners']
-                folder_details = {
+        for item in items:
+            zen = item['owners']
+            folder_details = {
                     'owner_name': zen[0]['displayName'],
                     'owner_kind': zen[0]['kind'],
                     'fileid': item['id'],
@@ -95,5 +91,5 @@ class GoogleDrive:
                     'trashed': item['trashed'],
                     'created_time': item['createdTime']
                 }
-                folder_list.append(folder_details)
+            folder_list.append(folder_details)
         return folder_list

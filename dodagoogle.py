@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import (QListWidget,
                              QListWidgetItem,
                              QMainWindow, QApplication)
-from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtGui import QIcon, QPixmap, QFont, QColor
 from PyQt5.QtCore import QByteArray, QSettings
 
 from frmMain_ui import Ui_MainWindow
@@ -19,6 +19,9 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self.bind_actions()
         self.bind_controls()
         self._folders = []
+        # _active_folder is the variable used to keep track
+        # of the last selected folder, this is used to go back for example
+        self._active_folder = -1
 
     def bind_controls(self):
         self.googleDriveList.itemClicked.connect(self.handle_item_clicked)
@@ -26,7 +29,12 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
 
     def handle_item_doubleclicked(self):
         zen = self.googleDriveList.currentItem()
-        self.get_drive_contents(zen.fileid)
+        if zen.mime_type.endswith(".folder"):
+            self._active_folder = zen.fileid
+            self.statusbar.showMessage(self._active_folder)
+            self.get_drive_contents(zen.fileid)
+        else:
+            print("Not a folder")
 
     def handle_item_clicked(self):
         zen = self.googleDriveList.currentItem()
@@ -49,39 +57,54 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self.actionLoad_Files.triggered.connect(self.handle_load_files)
 
     def get_drive_contents(self, folder_id):
+        """
+        Query Google Drive about the files in a directory.
+        :param folder_id:  The google id for a file/folder. The format of such
+            and id is like this one : 1B9hpSN8OkfIJdgNTU3ApTbXyJfmZnA02
+        """
         doda = GoogleDrive()
         self.googleDriveList.clear()
-        self._folders = doda.get_files_in_folder(folder_id=folder_id)
-        for folder in self._folders:
+        drive_contents = doda.get_files_in_folder(folder_id=folder_id)
+        # Sort the returned list on the mime_type.  This way we can group files and folders
+        sortedList = sorted(drive_contents, key=lambda k: k['mime_type'])
+
+        # Font for listitems
+        font = QFont()
+        font.setBold(False)
+        font.setPointSize(12)
+        # font.setWeight(75)
+
+        # Put items in the listview
+        for folder in sortedList:
             ic = QIcon()
             # Check what type of icon we have to use
             icon_type = folder['mime_type']
-
             # replace the / into -
             new_icon_type = icon_type.replace("/", "-")
-            print("ICON", new_icon_type)
             if new_icon_type == "application-vnd.google-apps.folder":
-                print("ZWABBER")
-                new_icon_type = "Places-folder-green-icon"
+                new_icon_type = "Places-folder-blue-icon"
 
             ic.addPixmap(QPixmap(f":/icons/{new_icon_type}"))
-
-            ploink = DodaListItem.DodaListItem(owner_name=folder['owner_name'],
-                                               owner_kind=folder['owner_kind'],
-                                               fileid=folder['fileid'],
-                                               filename=folder['filename'],
-                                               file_kind=folder['file_kind'],
-                                               mime_type=folder['mime_type'],
-                                               trashed=folder['trashed'],
-                                               created_time=folder['created_time'])
-            ploink.setText(folder['filename'])
-            ploink.setIcon(ic)
-            self.googleDriveList.addItem(ploink)
+            # Contruct a new DodaListItem
+            dodaListItem = DodaListItem.DodaListItem(owner_name=folder['owner_name'],
+                                                     owner_kind=folder['owner_kind'],
+                                                     fileid=folder['fileid'],
+                                                     filename=folder['filename'],
+                                                     file_kind=folder['file_kind'],
+                                                     mime_type=folder['mime_type'],
+                                                     trashed=folder['trashed'],
+                                                     created_time=folder['created_time'])
+            dodaListItem.setText(folder['filename'])
+            dodaListItem.setFont(font)
+            if icon_type.endswith(".folder"):
+                dodaListItem.setForeground(QColor('sea green'))
+            dodaListItem.setIcon(ic)
+            self.googleDriveList.addItem(dodaListItem)
 
     def handle_load_files(self):
         """
-        Slot
-        Load the folders from Google Drive
+        Load the folders from Google Drive, because this is supposed to be the root
+        folder, we set an empty folder_id
         """
         zen = self.googleDriveList.currentItem()
         self.get_drive_contents(folder_id="")
