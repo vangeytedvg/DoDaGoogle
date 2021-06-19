@@ -116,14 +116,15 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
             if folder['trashed']:
                 self._trashfound = True
 
+        # Change the trashcan icon here
         if self._trashfound:
-            icon2 = QIcon()
-            icon2.addPixmap(QPixmap(":/icons/Full-Trash-icon.png"), QIcon.Normal, QIcon.Off)
-            self.actionTrash_Can.setIcon(icon2)
+            icon = QIcon()
+            icon.addPixmap(QPixmap(":/icons/Full-Trash-icon.png"), QIcon.Normal, QIcon.Off)
+            self.actionTrash_Can.setIcon(icon)
         else:
-            icon2 = QIcon()
-            icon2.addPixmap(QPixmap(":/icons/Empty-Trash-icon.png"), QIcon.Normal, QIcon.Off)
-            self.actionTrash_Can.setIcon(icon2)
+            icon = QIcon()
+            icon.addPixmap(QPixmap(":/icons/Empty-Trash-icon.png"), QIcon.Normal, QIcon.Off)
+            self.actionTrash_Can.setIcon(icon)
 
     def handle_load_files(self):
         """
