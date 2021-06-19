@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>Full-Trash-icon.png</file>
+    <file>Empty-Trash-icon.png</file>
     <file>Word-2-icon.png</file>
     <file>application-presentation.png</file>
     <file>Home Folder.png</file>

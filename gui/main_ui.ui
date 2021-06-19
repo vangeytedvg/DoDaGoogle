@@ -87,6 +87,7 @@
     <addaction name="actionNew"/>
     <addaction name="actionDelete"/>
     <addaction name="actionRename"/>
+    <addaction name="actionTrash_Can"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menuFolder"/>
@@ -116,6 +117,8 @@
    </attribute>
    <addaction name="actionLoad_Files"/>
    <addaction name="actionUp"/>
+   <addaction name="separator"/>
+   <addaction name="actionTrash_Can"/>
    <addaction name="separator"/>
    <addaction name="actionE_xit"/>
   </widget>
@@ -162,6 +165,18 @@
   <action name="actionRename">
    <property name="text">
     <string>Rename</string>
+   </property>
+  </action>
+  <action name="actionTrash_Can">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/icons/Empty-Trash-icon.png</normaloff>:/icons/Empty-Trash-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>View Trash Can</string>
+   </property>
+   <property name="toolTip">
+    <string>View Trash Can</string>
    </property>
   </action>
  </widget>

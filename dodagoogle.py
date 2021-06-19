@@ -23,6 +23,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         # of the last selected folder, this is used to go back for example
         self._active_folder = -1
         self._folder_history = []
+        self._trashfound = False
 
     def bind_controls(self):
         self.googleDriveList.itemClicked.connect(self.handle_item_clicked)
@@ -70,7 +71,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         drive_contents = doda.get_files_in_folder(folder_id=folder_id)
         # Sort the returned list on the mime_type.  This way we can group files and folders
         sortedList = sorted(drive_contents, key=lambda k: k['mime_type'])
-
+        self._trashfound = False
         # Font for listitems
         font = QFont()
         font.setBold(False)
@@ -95,7 +96,6 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
             elif new_icon_type.endswith(".zip"):
                 new_icon_type = "application-zip.png"
 
-
             ic.addPixmap(QPixmap(f":/icons/{new_icon_type}"))
             # Contruct a new DodaListItem
             dodaListItem = DodaListItem.DodaListItem(owner_name=folder['owner_name'],
@@ -112,6 +112,18 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
                 dodaListItem.setForeground(QColor('sea green'))
             dodaListItem.setIcon(ic)
             self.googleDriveList.addItem(dodaListItem)
+            # Check if an item is marked as trashed
+            if folder['trashed']:
+                self._trashfound = True
+
+        if self._trashfound:
+            icon2 = QIcon()
+            icon2.addPixmap(QPixmap(":/icons/Full-Trash-icon.png"), QIcon.Normal, QIcon.Off)
+            self.actionTrash_Can.setIcon(icon2)
+        else:
+            icon2 = QIcon()
+            icon2.addPixmap(QPixmap(":/icons/Empty-Trash-icon.png"), QIcon.Normal, QIcon.Off)
+            self.actionTrash_Can.setIcon(icon2)
 
     def handle_load_files(self):
         """
