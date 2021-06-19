@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>Word-2-icon.png</file>
     <file>application-presentation.png</file>
     <file>Home Folder.png</file>
     <file>folder_up.png</file>

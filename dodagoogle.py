@@ -84,11 +84,17 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
             icon_type = folder['mime_type']
             # replace the / into -
             new_icon_type = icon_type.replace("/", "-")
-            # if new_icon_type == "application-vnd.google-apps.folder":
+
+            # Set the icon in case of known files
             if new_icon_type.endswith(".folder"):
                 new_icon_type = "Places-folder-green-icon"
             elif new_icon_type.endswith(".presentation"):
                 new_icon_type = "application-presentation.png"
+            elif new_icon_type.endswith(".doc"):
+                new_icon_type = "Word-2-icon.png"
+            elif new_icon_type.endswith(".zip"):
+                new_icon_type = "application-zip.png"
+
 
             ic.addPixmap(QPixmap(f":/icons/{new_icon_type}"))
             # Contruct a new DodaListItem
