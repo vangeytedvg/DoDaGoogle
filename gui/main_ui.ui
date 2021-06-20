@@ -33,7 +33,7 @@
        <enum>QAbstractItemView::DragDrop</enum>
       </property>
       <property name="defaultDropAction">
-       <enum>Qt::IgnoreAction</enum>
+       <enum>Qt::CopyAction</enum>
       </property>
       <property name="iconSize">
        <size>
@@ -41,17 +41,23 @@
         <height>96</height>
        </size>
       </property>
+      <property name="textElideMode">
+       <enum>Qt::ElideNone</enum>
+      </property>
+      <property name="isWrapping" stdset="0">
+       <bool>true</bool>
+      </property>
       <property name="resizeMode">
        <enum>QListView::Adjust</enum>
       </property>
       <property name="spacing">
-       <number>10</number>
+       <number>20</number>
       </property>
       <property name="viewMode">
        <enum>QListView::IconMode</enum>
       </property>
       <property name="uniformItemSizes">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="wordWrap">
        <bool>false</bool>

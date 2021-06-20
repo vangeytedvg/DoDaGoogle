@@ -46,7 +46,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         # If it is an instance of DodaListItem, we can get the enriched
         # information from it.
         if type(zen).__name__ == "DodaListItem":
-            print(zen.owner_name)
+            self.statusbar.showMessage(zen.filename)
             print(zen.owner_kind)
             print(zen.filename)
             print(zen.trashed)
@@ -89,7 +89,6 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         """
 
         if folder_id == "root":
-            print("ROOT")
             folder_id = ""
 
         doda = GoogleDrive()
@@ -104,7 +103,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         # Font for listitems
         font = QFont()
         font.setBold(False)
-        font.setPointSize(12)
+        font.setPointSize(10)
         # font.setWeight(75)
 
         # Put items in the listview
