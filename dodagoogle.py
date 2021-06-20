@@ -11,8 +11,14 @@ from CustomWidgets import DodaListItem
 
 
 class DodaGoogle(QMainWindow, Ui_MainWindow):
+    """
+    DoDaGoogle class, mimics Google Drive
+    """
 
     def __init__(self):
+        """
+        Ctor
+        """
         super(DodaGoogle, self).__init__()
         self.setupUi(self)
         self.loadsettings()
@@ -27,10 +33,17 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self._trashfound = False
 
     def bind_controls(self):
+        """
+        Bind signals for normal Widgets
+        :return:
+        """
         self.googleDriveList.itemClicked.connect(self.handle_item_clicked)
         self.googleDriveList.itemDoubleClicked.connect(self.handle_item_doubleclicked)
 
     def handle_item_doubleclicked(self):
+        """
+        When the user double-clicks a folder or file
+        """
         zen = self.googleDriveList.currentItem()
         if zen.mime_type.endswith(".folder"):
             # Add the selected folder to the history
@@ -42,6 +55,9 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
             print("Not a folder")
 
     def handle_item_clicked(self):
+        """
+        When te user clicks on a folder/file
+        """
         zen = self.googleDriveList.currentItem()
         # If it is an instance of DodaListItem, we can get the enriched
         # information from it.
