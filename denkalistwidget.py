@@ -4,6 +4,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class DenkaListWidget(QtWidgets.QListWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
+        # The text that will appear in the widget when there are no items
         self._empty_folder_text = ""
 
     @property

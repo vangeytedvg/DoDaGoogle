@@ -67,7 +67,6 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         Go up one folder
         :return:
         """
-        print(self._folder_history)
         try:
             # Get the last selected folder and remove it from the array
             # Pop current folder. If this item is not removed first,
@@ -79,6 +78,8 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         except IndexError as e:
             # If any index error occurs, simply go to the root folder
             self.get_drive_contents(folder_id='')
+            # Disable the back button
+            self.actionUp.setEnabled(False)
 
     def get_drive_contents(self, folder_id):
         """
@@ -94,6 +95,9 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         doda = GoogleDrive()
         self.googleDriveList.clear()
         drive_contents = doda.get_files_in_folder(folder_id=folder_id)
+        # If we have contents, enable the back button
+        if drive_contents:
+            self.actionUp.setEnabled(True)
         # Sort the returned list on the mime_type.  This way we can group files and folders
         sortedList = sorted(drive_contents, key=lambda k: k['mime_type'])
         self._trashfound = False
