@@ -68,9 +68,11 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         """
         print(self._folder_history)
         try:
-            # Get the last selected folder and remove it from the array, we need
-            # to call pop twice to remove the current selected directory too.
+            # Get the last selected folder and remove it from the array
+            # Pop current folder. If this item is not removed first,
+            # we don't get the correct parent folder and nothing happens.
             self._folder_history.pop()
+            # Get the parent folder
             parent = self._folder_history.pop()
             self.get_drive_contents(folder_id=parent)
         except IndexError as e:
