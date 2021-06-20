@@ -18,6 +18,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self.loadsettings()
         self.bind_actions()
         self.bind_controls()
+        self.googleDriveList.empty_folder_text = "No files in this Google Drive folder"
 
         # _active_folder is the variable used to keep track
         # of the last selected folder, this is used to go back for example

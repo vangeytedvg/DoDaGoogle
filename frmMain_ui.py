@@ -20,7 +20,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.googleDriveList = QtWidgets.QListWidget(self.centralwidget)
+        self.googleDriveList = DenkaListWidget(self.centralwidget)
         self.googleDriveList.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.googleDriveList.setEditTriggers(QtWidgets.QAbstractItemView.CurrentChanged|QtWidgets.QAbstractItemView.DoubleClicked|QtWidgets.QAbstractItemView.SelectedClicked)
         self.googleDriveList.setProperty("showDropIndicator", False)
@@ -112,4 +112,5 @@ class Ui_MainWindow(object):
         self.actionRename.setText(_translate("MainWindow", "Rename"))
         self.actionTrash_Can.setText(_translate("MainWindow", "View Trash Can"))
         self.actionTrash_Can.setToolTip(_translate("MainWindow", "View Trash Can"))
+from denkalistwidget import DenkaListWidget
 import images_rc
