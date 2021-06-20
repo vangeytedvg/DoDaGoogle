@@ -59,6 +59,23 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         """
         self.actionE_xit.triggered.connect(self.close)
         self.actionLoad_Files.triggered.connect(self.handle_load_files)
+        self.actionUp.triggered.connect(self.handle_back)
+
+    def handle_back(self):
+        """
+        Go up one folder
+        :return:
+        """
+        print(self._folder_history)
+        try:
+            # Get the last selected folder and remove it from the array, we need
+            # to call pop twice to remove the current selected directory too.
+            self._folder_history.pop()
+            parent = self._folder_history.pop()
+            self.get_drive_contents(folder_id=parent)
+        except IndexError as e:
+            # If any index error occurs, simply go to the root folder
+            self.get_drive_contents(folder_id='')
 
     def get_drive_contents(self, folder_id):
         """
@@ -66,6 +83,11 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         :param folder_id:  The google id for a file/folder. The format of such
             and id is like this one : 1B9hpSN8OkfIJdgNTU3ApTbXyJfmZnA02
         """
+
+        if folder_id == "root":
+            print("ROOT")
+            folder_id = ""
+
         doda = GoogleDrive()
         self.googleDriveList.clear()
         drive_contents = doda.get_files_in_folder(folder_id=folder_id)
@@ -132,10 +154,9 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         folder, we set an empty folder_id
         """
         zen = self.googleDriveList.currentItem()
+        self._folder_history.clear()
+        self._folder_history.append("root")
         self.get_drive_contents(folder_id="")
-
-    def load_folder_contents(self, folder_id=''):
-        self.handle_load_files()
 
     """------------------ Settings Section ------------------"""
 
