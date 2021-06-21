@@ -129,23 +129,9 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
             icon_type = folder['mime_type']
             # replace the / into -
             new_icon_type = icon_type.replace("/", "-")
-
-            # default icon
-            current_icon = "file.png"
-
-            # Set the icon in case of known files
-            print("NE", new_icon_type)
-            if ".folder" in new_icon_type:
-                current_icon = "Places-folder-green-icon"
-            if ".presentation" in new_icon_type or ".odp" in new_icon_type:
-                current_icon = "application-presentation.png"
-            if ".odt" in new_icon_type:
-                print("KWWAAK")
-                current_icon = "Word-2-icon.png"
-            if ".zip" in new_icon_type:
-                current_icon = "application-zip.png"
-
-            ic.addPixmap(QPixmap(f":/icons/{current_icon}"))
+            print("ICT : ", f":/icons/{new_icon_type}")
+            # ic.addPixmap(QPixmap(":/icons/audio-wav.png"))
+            ic.addPixmap(QPixmap(f":/icons/{new_icon_type}.png"))
             # Contruct a new DodaListItem
             dodaListItem = DodaListItem.DodaListItem(owner_name=folder['owner_name'],
                                                      owner_kind=folder['owner_kind'],

@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="icons">
+    <file>application-wps-office.doc.png</file>
+    <file>application-vnd.oasis.opendocument.text.png</file>
+    <file>application-vnd.oasis.opendocument.presentation.png</file>
+    <file>audio-wav.png</file>
     <file>Full-Trash-icon.png</file>
     <file>Empty-Trash-icon.png</file>
     <file>Word-2-icon.png</file>
