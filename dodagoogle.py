@@ -129,8 +129,8 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
             icon_type = folder['mime_type']
             # replace the / into -
             new_icon_type = icon_type.replace("/", "-")
+            new_icon_type = new_icon_type.replace("+", "-")
             print("ICT : ", f":/icons/{new_icon_type}")
-            # ic.addPixmap(QPixmap(":/icons/audio-wav.png"))
             ic.addPixmap(QPixmap(f":/icons/{new_icon_type}.png"))
             # Contruct a new DodaListItem
             dodaListItem = DodaListItem.DodaListItem(owner_name=folder['owner_name'],

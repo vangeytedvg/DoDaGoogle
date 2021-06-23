@@ -1,5 +1,12 @@
 <RCC>
   <qresource prefix="icons">
+    <file>image-bmp.png</file>
+    <file>image-svg-xml.png</file>
+    <file>image-gif.png</file>
+    <file>image-jpeg.png</file>
+    <file>image-jpg.png</file>
+    <file>image-png.png</file>
+    <file>application-vnd.openxmlformats-officedocument.presentationml.presentation.png</file>
     <file>application-wps-office.doc.png</file>
     <file>application-vnd.oasis.opendocument.text.png</file>
     <file>application-vnd.oasis.opendocument.presentation.png</file>
