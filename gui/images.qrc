@@ -17,16 +17,11 @@
     <file>application-wps-office.doc.png</file>
     <file>application-vnd.oasis.opendocument.text.png</file>
     <file>audio-wav.png</file>
-    <file>Full-Trash-icon.png</file>
     <file>application-vnd.oasis.opendocument.presentation.png</file>
     <file>application-vnd.openxmlformats-officedocument.presentationml.presentation.png</file>
-    <file>Empty-Trash-icon.png</file>
     <file>Word-2-icon.png</file>
     <file>application-presentation.png</file>
-    <file>Home Folder.png</file>
-    <file>folder_up.png</file>
     <file>Places-folder-green-icon.png</file>
-    <file>close.png</file>
     <file>Network-icon.png</file>
     <file>aqua-trash-full-icon.png</file>
     <file>aqua-trash-empty-icon.png</file>
@@ -40,5 +35,13 @@
     <file>application-zip.png</file>
     <file>video-mp4.png</file>
     <file>application-vnd.google-apps.folder.png</file>
+  </qresource>
+  <qresource prefix="action_icons">
+    <file>Home Folder.png</file>
+    <file>Database-Cloud-icon.png</file>
+    <file>Full-Trash-icon.png</file>
+    <file>Empty-Trash-icon.png</file>
+    <file>folder_up.png</file>
+    <file>close.png</file>
   </qresource>
 </RCC>

@@ -30,7 +30,7 @@
        <bool>false</bool>
       </property>
       <property name="dragDropMode">
-       <enum>QAbstractItemView::DropOnly</enum>
+       <enum>QAbstractItemView::NoDragDrop</enum>
       </property>
       <property name="defaultDropAction">
        <enum>Qt::CopyAction</enum>
@@ -134,7 +134,7 @@
   <action name="actionE_xit">
    <property name="icon">
     <iconset resource="images.qrc">
-     <normaloff>:/icons/close.png</normaloff>:/icons/close.png</iconset>
+     <normaloff>:/action_icons/close.png</normaloff>:/action_icons/close.png</iconset>
    </property>
    <property name="text">
     <string>E&amp;xit</string>
@@ -143,7 +143,7 @@
   <action name="actionLoad_Files">
    <property name="icon">
     <iconset resource="images.qrc">
-     <normaloff>:/icons/Home Folder.png</normaloff>:/icons/Home Folder.png</iconset>
+     <normaloff>:/action_icons/Home Folder.png</normaloff>:/action_icons/Home Folder.png</iconset>
    </property>
    <property name="text">
     <string>Home Folder</string>
@@ -152,7 +152,7 @@
   <action name="actionUp">
    <property name="icon">
     <iconset resource="images.qrc">
-     <normaloff>:/icons/folder_up.png</normaloff>:/icons/folder_up.png</iconset>
+     <normaloff>:/action_icons/folder_up.png</normaloff>:/action_icons/folder_up.png</iconset>
    </property>
    <property name="text">
     <string>Go back</string>
@@ -179,7 +179,7 @@
   <action name="actionTrash_Can">
    <property name="icon">
     <iconset resource="images.qrc">
-     <normaloff>:/icons/Empty-Trash-icon.png</normaloff>:/icons/Empty-Trash-icon.png</iconset>
+     <normaloff>:/action_icons/Empty-Trash-icon.png</normaloff>:/action_icons/Empty-Trash-icon.png</iconset>
    </property>
    <property name="text">
     <string>View Trash Can</string>
