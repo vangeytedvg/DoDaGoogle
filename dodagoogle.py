@@ -197,7 +197,6 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         """
           Load the settings from the registry (windows) or settings file (linux)
         """
-        # --> this part needs to be migrated to the Settings class
         settings = QSettings("DenkaTech", "DodaGoogle")
         settings.beginGroup("mainwindow")
         self.restoreState(settings.value("frm_main/state", QByteArray()))
@@ -207,7 +206,6 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
 
 if __name__ == '__main__':
     import sys
-
     app = QApplication(sys.argv)
     main_form = DodaGoogle()
     main_form.show()

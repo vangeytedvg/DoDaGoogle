@@ -1,17 +1,25 @@
 <RCC>
   <qresource prefix="icons">
+    <file>application-x-xcf.png</file>
+    <file>audio-mpeg.png</file>
+    <file>video-mpeg.png</file>
+    <file>application-octet-stream.png</file>
+    <file>text-x-python.png</file>
+    <file>text-xml.png</file>
+    <file>application-x-shellscript.png</file>
+    <file>application-x-designer.png</file>
     <file>image-bmp.png</file>
     <file>image-svg-xml.png</file>
     <file>image-gif.png</file>
     <file>image-jpeg.png</file>
     <file>image-jpg.png</file>
     <file>image-png.png</file>
-    <file>application-vnd.openxmlformats-officedocument.presentationml.presentation.png</file>
     <file>application-wps-office.doc.png</file>
     <file>application-vnd.oasis.opendocument.text.png</file>
-    <file>application-vnd.oasis.opendocument.presentation.png</file>
     <file>audio-wav.png</file>
     <file>Full-Trash-icon.png</file>
+    <file>application-vnd.oasis.opendocument.presentation.png</file>
+    <file>application-vnd.openxmlformats-officedocument.presentationml.presentation.png</file>
     <file>Empty-Trash-icon.png</file>
     <file>Word-2-icon.png</file>
     <file>application-presentation.png</file>

@@ -25,14 +25,15 @@ class DenkaListWidget(QtWidgets.QListWidget):
         super().paintEvent(event)
         # We have nothing in the list?
         if self.count() == 0:
+            # Draw the text in the list widget viewport
             painter = QtGui.QPainter(self.viewport())
             painter.save()
-            # col = self.palette().placeholderText().color()
-            text_color = QtGui.QColor("sea green")
+            text_color = self.palette().placeholderText().color()
+            #text_color = QtGui.QColor("sea green")
             painter.setPen(text_color)
             font_met = self.fontMetrics()
             elided_text = font_met.elidedText(
                 self._empty_folder_text, QtCore.Qt.ElideRight, self.viewport().width()
             )
-            painter.drawText(self.viewport().rect(), QtCore.Qt.AlignHCenter, elided_text)
+            painter.drawText(self.viewport().rect(), QtCore.Qt.AlignCenter, elided_text)
             painter.restore()
