@@ -30,7 +30,7 @@
        <bool>false</bool>
       </property>
       <property name="dragDropMode">
-       <enum>QAbstractItemView::DragDrop</enum>
+       <enum>QAbstractItemView::DropOnly</enum>
       </property>
       <property name="defaultDropAction">
        <enum>Qt::CopyAction</enum>
@@ -43,6 +43,9 @@
       </property>
       <property name="textElideMode">
        <enum>Qt::ElideNone</enum>
+      </property>
+      <property name="movement">
+       <enum>QListView::Static</enum>
       </property>
       <property name="isWrapping" stdset="0">
        <bool>true</bool>
@@ -60,7 +63,7 @@
        <bool>false</bool>
       </property>
       <property name="wordWrap">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="sortingEnabled">
        <bool>false</bool>

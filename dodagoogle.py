@@ -150,6 +150,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
             # Check if an item is marked as trashed
             if folder['trashed']:
                 self._trashfound = True
+                dodaListItem.setForeground(QColor('red'))
 
         # Change the trashcan icon here
         if self._trashfound:

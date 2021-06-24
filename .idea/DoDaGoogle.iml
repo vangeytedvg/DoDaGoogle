@@ -3,6 +3,13 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
+      <excludeFolder url="file://$MODULE_DIR$/statebuild/googleapiclient/discovery_cache/documents" />
+      <excludeFolder url="file://$MODULE_DIR$/statebuild/google_auth-1.31.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/statebuild/google_auth_oauthlib" />
+      <excludeFolder url="file://$MODULE_DIR$/statebuild/google_auth_oauthlib-0.4.4.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/statebuild/googleapis_common_protos-1.53.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
+      <excludeFolder url="file://$MODULE_DIR$/dist" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
