@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import (QMainWindow, QApplication, QFrame, QLabel)
+from PyQt5.QtWidgets import (QMainWindow, QApplication, QFrame, QLabel, QLineEdit)
 from PyQt5.QtGui import QIcon, QPixmap, QFont, QColor
 from PyQt5.QtCore import QByteArray, QSettings
 
@@ -18,6 +18,14 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         Ctor
         """
         super(DodaGoogle, self).__init__()
+        # These are the widgets that will be placed on the statusbar
+        self.lbl_google_folderid = QLineEdit("none")
+        self.lbl_google_folderid_info = QLabel("Google folder id")
+        self.lbl_trashed = QLabel("no")
+        self.lbl_trashed_info = QLabel("Trashed")
+        self.lbl_filename = QLineEdit("none")
+        self.lbl_filename_info = QLabel("Selected file/folder")
+
         self.setupUi(self)
         self.loadsettings()
         self.setup_statusbar()
@@ -31,30 +39,26 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self._folder_history = []
         self._trashfound = False
 
-    # noinspection PyAttributeOutsideInit
     def setup_statusbar(self):
         """
         Add additional widgets to the statusbar
         """
         # Filename
-        self.lbl_filename_info = QLabel("Selected file/folder")
-        self.lbl_filename = QLabel("none")
-        self.lbl_filename.setFrameShadow(QFrame.Raised)
-        self.lbl_filename.setFrameShape(QFrame.Panel)
+        self.lbl_filename_info.setStyleSheet("color: rgb(171, 171, 171);")
+        self.lbl_filename.setReadOnly(True)
+        # self.lbl_filename.setFrameShadow(QFrame.Raised)
+        # self.lbl_filename.setFrameShape(QFrame.Panel)
         self.statusbar.addPermanentWidget(self.lbl_filename_info)
         self.statusbar.addPermanentWidget(self.lbl_filename)
         # Trashcan info
-        self.lbl_trashed_info = QLabel("Trashed")
-        self.lbl_trashed = QLabel("no")
+        self.lbl_trashed_info.setStyleSheet("color: rgb(171, 171, 171);")
         self.lbl_trashed.setFrameShadow(QFrame.Raised)
         self.lbl_trashed.setFrameShape(QFrame.Panel)
         self.statusbar.addPermanentWidget(self.lbl_trashed_info)
         self.statusbar.addPermanentWidget(self.lbl_trashed)
         # Google for id
-        self.lbl_google_folderid_info = QLabel("Google folder id")
-        self.lbl_google_folderid = QLabel("")
-        self.lbl_google_folderid.setFrameShadow(QFrame.Raised)
-        self.lbl_google_folderid.setFrameShape(QFrame.Panel)
+        self.lbl_google_folderid_info.setStyleSheet("color: rgb(171, 171, 171);")
+        self.lbl_google_folderid.setReadOnly(True)
         self.statusbar.addPermanentWidget(self.lbl_google_folderid_info)
         self.statusbar.addPermanentWidget(self.lbl_google_folderid)
 
@@ -75,10 +79,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
             # Add the selected folder to the history
             self._folder_history.append(zen.fileid)
             self._active_folder = zen.fileid
-            self.statusbar.showMessage(self._active_folder)
             self.get_drive_contents(zen.fileid)
-        else:
-            print("Not a folder")
 
     def handle_item_clicked(self):
         """
@@ -88,12 +89,19 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         # If it is an instance of DodaListItem, we can get the enriched
         # information from it.
         if type(zen).__name__ == "DodaListItem":
-            self.statusbar.showMessage(zen.filename)
-            print(zen.owner_kind)
-            print(zen.filename)
+            if zen.mime_type.endswith(".folder"):
+                self.lbl_filename_info.setText("Selected Folder")
+            else:
+                self.lbl_filename_info.setText("Selected File")
+            self.lbl_filename.setText(zen.filename)
             print(zen.trashed)
-            print(zen.fileid)
-            print(zen.mime_type)
+            if zen.trashed:
+                self.lbl_trashed.setStyleSheet("color: red;")
+                self.lbl_trashed.setText("Marked as trash")
+            else:
+                self.lbl_trashed.setStyleSheet("color: white;")
+                self.lbl_trashed.setText("no")
+            self.lbl_google_folderid.setText(zen.fileid)
 
     def bind_actions(self):
         """
