@@ -86,6 +86,8 @@
      <string>&amp;File</string>
     </property>
     <addaction name="actionLoad_Files"/>
+    <addaction name="actionUpload_file_s"/>
+    <addaction name="separator"/>
     <addaction name="actionE_xit"/>
    </widget>
    <widget class="QMenu" name="menuFolder">
@@ -126,6 +128,8 @@
    </attribute>
    <addaction name="actionLoad_Files"/>
    <addaction name="actionUp"/>
+   <addaction name="separator"/>
+   <addaction name="actionUpload_file_s"/>
    <addaction name="separator"/>
    <addaction name="actionTrash_Can"/>
    <addaction name="separator"/>
@@ -186,6 +190,15 @@
    </property>
    <property name="toolTip">
     <string>View Trash Can</string>
+   </property>
+  </action>
+  <action name="actionUpload_file_s">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/action_icons/Database-Cloud-icon.png</normaloff>:/action_icons/Database-Cloud-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Upload file(s)</string>
    </property>
   </action>
  </widget>

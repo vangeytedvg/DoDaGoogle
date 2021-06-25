@@ -1,6 +1,4 @@
-from PyQt5.QtWidgets import (QListWidget,
-                             QListWidgetItem,
-                             QMainWindow, QApplication)
+from PyQt5.QtWidgets import (QMainWindow, QApplication, QFrame, QLabel)
 from PyQt5.QtGui import QIcon, QPixmap, QFont, QColor
 from PyQt5.QtCore import QByteArray, QSettings
 
@@ -22,6 +20,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         super(DodaGoogle, self).__init__()
         self.setupUi(self)
         self.loadsettings()
+        self.setup_statusbar()
         self.bind_actions()
         self.bind_controls()
         self.googleDriveList.empty_folder_text = "No files in this Google Drive folder"
@@ -31,6 +30,33 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self._active_folder = -1
         self._folder_history = []
         self._trashfound = False
+
+    # noinspection PyAttributeOutsideInit
+    def setup_statusbar(self):
+        """
+        Add additional widgets to the statusbar
+        """
+        # Filename
+        self.lbl_filename_info = QLabel("Selected file/folder")
+        self.lbl_filename = QLabel("none")
+        self.lbl_filename.setFrameShadow(QFrame.Raised)
+        self.lbl_filename.setFrameShape(QFrame.Panel)
+        self.statusbar.addPermanentWidget(self.lbl_filename_info)
+        self.statusbar.addPermanentWidget(self.lbl_filename)
+        # Trashcan info
+        self.lbl_trashed_info = QLabel("Trashed")
+        self.lbl_trashed = QLabel("no")
+        self.lbl_trashed.setFrameShadow(QFrame.Raised)
+        self.lbl_trashed.setFrameShape(QFrame.Panel)
+        self.statusbar.addPermanentWidget(self.lbl_trashed_info)
+        self.statusbar.addPermanentWidget(self.lbl_trashed)
+        # Google for id
+        self.lbl_google_folderid_info = QLabel("Google folder id")
+        self.lbl_google_folderid = QLabel("")
+        self.lbl_google_folderid.setFrameShadow(QFrame.Raised)
+        self.lbl_google_folderid.setFrameShape(QFrame.Panel)
+        self.statusbar.addPermanentWidget(self.lbl_google_folderid_info)
+        self.statusbar.addPermanentWidget(self.lbl_google_folderid)
 
     def bind_controls(self):
         """
