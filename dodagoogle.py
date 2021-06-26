@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import (QMainWindow, QApplication, QFrame, QLabel, QLineEdit)
+from PyQt5.QtWidgets import (QMainWindow, QApplication, QFrame, QLabel, QLineEdit, QToolBar)
 from PyQt5.QtGui import QIcon, QPixmap, QFont, QColor
 from PyQt5.QtCore import QByteArray, QSettings
 
@@ -25,10 +25,11 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self.lbl_trashed_info = QLabel("Trashed")
         self.lbl_filename = QLineEdit("none")
         self.lbl_filename_info = QLabel("Selected file/folder")
-
+        # House keeping...
         self.setupUi(self)
         self.loadsettings()
         self.setup_statusbar()
+        self.setup_toolbar(self.toolBar)
         self.bind_actions()
         self.bind_controls()
         self.googleDriveList.empty_folder_text = "No files in this Google Drive folder"
@@ -39,15 +40,21 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self._folder_history = []
         self._trashfound = False
 
+    def setup_toolbar(self, toolbar: QToolBar):
+        """
+        Setup additional widget for a toolbar
+        :param toolbar: The toolbar to host the widgets
+        :return:
+        """
+        pass
+
     def setup_statusbar(self):
         """
-        Add additional widgets to the statusbar
+        Add additional widgets to the statusbar.
         """
         # Filename
         self.lbl_filename_info.setStyleSheet("color: rgb(171, 171, 171);")
         self.lbl_filename.setReadOnly(True)
-        # self.lbl_filename.setFrameShadow(QFrame.Raised)
-        # self.lbl_filename.setFrameShape(QFrame.Panel)
         self.statusbar.addPermanentWidget(self.lbl_filename_info)
         self.statusbar.addPermanentWidget(self.lbl_filename)
         # Trashcan info
@@ -115,7 +122,6 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
     def handle_back(self):
         """
         Go up one folder
-        :return:
         """
         try:
             # Get the last selected folder and remove it from the array
@@ -144,17 +150,20 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         doda = GoogleDrive()
         self.googleDriveList.clear()
         drive_contents = doda.get_files_in_folder(folder_id=folder_id)
+        self.lbl_google_folderid.setText(folder_id)
+
         # If we have contents, enable the back button
         if drive_contents:
             self.actionUp.setEnabled(True)
+
         # Sort the returned list on the mime_type.  This way we can group files and folders
         sortedList = sorted(drive_contents, key=lambda k: k['mime_type'])
         self._trashfound = False
+
         # Font for listitems
         font = QFont()
         font.setBold(False)
         font.setPointSize(10)
-        # font.setWeight(75)
 
         # Put items in the listview
         for folder in sortedList:

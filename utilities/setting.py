@@ -20,15 +20,15 @@ class Settings:
         settings.setValue(item, self._parent.saveState())
         settings.endGroup()
 
-    def load_form_settings(self, group, item):
-        """
-        Form state and geometry loading
-        """
-        settings = QSettings(self._company, self._section)
-        settings.beginGroup(group)
-        self.restoreState(settings.value(item, QByteArray()))
-        self.restoreGeometry(settings.value(item, QByteArray()))
-        settings.endGroup()
+    # def load_form_settings(self, group, item):
+    #     """
+    #     Form state and geometry loading
+    #     """
+    #     settings = QSettings(self._company, self._section)
+    #     settings.beginGroup(group)
+    #     self.restoreState(settings.value(item, QByteArray()))
+    #     self.restoreGeometry(settings.value(item, QByteArray()))
+    #     settings.endGroup()
 
     def save_setting(self, group, item, data):
         """

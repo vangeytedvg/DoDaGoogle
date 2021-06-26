@@ -15,6 +15,17 @@ class DodaListItem(QListWidgetItem):
                  mime_type="",
                  trashed="",
                  created_time=""):
+        """
+        Ctor
+        :param owner_name:
+        :param owner_kind:
+        :param fileid:
+        :param filename:
+        :param file_kind:
+        :param mime_type:
+        :param trashed:
+        :param created_time:
+        """
         super(DodaListItem, self).__init__()
         self.owner_name = owner_name
         self.owner_kind = owner_kind

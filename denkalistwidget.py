@@ -22,14 +22,17 @@ class DenkaListWidget(QtWidgets.QListWidget):
         self.update()
 
     def paintEvent(self, event):
+        """
+        Overide the paintEvent.  If the list contains no elements, draw the _placeholder_text instead
+        this looks like Windows Exploree.
+        """
         super().paintEvent(event)
         # We have nothing in the list?
         if self.count() == 0:
-            # Draw the text in the list widget viewport
+            # Draw the text in the list widget viewport, first change the text color
             painter = QtGui.QPainter(self.viewport())
             painter.save()
-            text_color = self.palette().placeholderText().color()
-            #text_color = QtGui.QColor("sea green")
+            text_color = QtGui.QColor("#a6a4a4")
             painter.setPen(text_color)
             font_met = self.fontMetrics()
             elided_text = font_met.elidedText(
