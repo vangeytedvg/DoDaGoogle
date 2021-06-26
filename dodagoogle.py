@@ -1,6 +1,7 @@
-from PyQt5.QtWidgets import (QMainWindow, QApplication, QFrame, QLabel, QLineEdit, QToolBar)
+from PyQt5.QtWidgets import (QMainWindow, QApplication, QFrame, QLabel,
+                             QLineEdit, QToolBar, QSlider)
 from PyQt5.QtGui import QIcon, QPixmap, QFont, QColor
-from PyQt5.QtCore import QByteArray, QSettings
+from PyQt5.QtCore import QByteArray, QSettings, Qt
 
 from frmMain_ui import Ui_MainWindow
 from utilities.setting import Settings
@@ -19,6 +20,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         """
         super(DodaGoogle, self).__init__()
         # These are the widgets that will be placed on the statusbar
+        self.slide = QSlider(parent=self, orientation=Qt.Horizontal)
         self.lbl_google_folderid = QLineEdit("none")
         self.lbl_google_folderid_info = QLabel("Google folder id")
         self.lbl_trashed = QLabel("no")
@@ -29,7 +31,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.loadsettings()
         self.setup_statusbar()
-        self.setup_toolbar(self.toolBar)
+        self.setup_toolbar(self.toolbar_Dynamic)
         self.bind_actions()
         self.bind_controls()
         self.googleDriveList.empty_folder_text = "No files in this Google Drive folder"
@@ -46,7 +48,11 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         :param toolbar: The toolbar to host the widgets
         :return:
         """
-        pass
+        self.slide.setTickPosition(QSlider.TicksBothSides)
+        self.slide.setMaximumWidth(100)
+        self.slide.setMinimum(25)
+        self.slide.setMaximum(64)
+        toolbar.addWidget(self.slide)
 
     def setup_statusbar(self):
         """
