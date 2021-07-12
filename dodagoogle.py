@@ -27,6 +27,8 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self.lbl_trashed_info = QLabel("Trashed")
         self.lbl_filename = QLineEdit("none")
         self.lbl_filename_info = QLabel("Selected file/folder")
+        self.lbl_parent = QLineEdit("none")
+        self.lbl_parent_info = QLabel("Selected file/folder")
         # House keeping...
         self.setupUi(self)
         self.loadsettings()
@@ -69,7 +71,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self.lbl_trashed.setFrameShape(QFrame.Panel)
         self.statusbar.addPermanentWidget(self.lbl_trashed_info)
         self.statusbar.addPermanentWidget(self.lbl_trashed)
-        # Google for id
+        # Google folder/file id
         self.lbl_google_folderid_info.setStyleSheet("color: rgb(171, 171, 171);")
         self.lbl_google_folderid.setReadOnly(True)
         self.statusbar.addPermanentWidget(self.lbl_google_folderid_info)
@@ -189,7 +191,9 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
                                                      file_kind=folder['file_kind'],
                                                      mime_type=folder['mime_type'],
                                                      trashed=folder['trashed'],
-                                                     created_time=folder['created_time'])
+                                                     created_time=folder['created_time'],
+                                                     parents=folder['parents'])
+
             dodaListItem.setText(folder['filename'])
             dodaListItem.setFont(font)
             # A folder?

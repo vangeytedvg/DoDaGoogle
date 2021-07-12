@@ -86,7 +86,7 @@
      <string>&amp;File</string>
     </property>
     <addaction name="actionLoad_Files"/>
-    <addaction name="actionUpload_file_s"/>
+    <addaction name="actionUpload_files"/>
     <addaction name="separator"/>
     <addaction name="actionE_xit"/>
    </widget>
@@ -129,7 +129,7 @@
    <addaction name="actionLoad_Files"/>
    <addaction name="actionUp"/>
    <addaction name="separator"/>
-   <addaction name="actionUpload_file_s"/>
+   <addaction name="actionUpload_files"/>
    <addaction name="separator"/>
    <addaction name="actionTrash_Can"/>
    <addaction name="separator"/>
@@ -203,7 +203,7 @@
     <string>View Trash Can</string>
    </property>
   </action>
-  <action name="actionUpload_file_s">
+  <action name="actionUpload_files">
    <property name="icon">
     <iconset resource="images.qrc">
      <normaloff>:/action_icons/Database-Cloud-icon.png</normaloff>:/action_icons/Database-Cloud-icon.png</iconset>

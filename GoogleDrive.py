@@ -2,6 +2,7 @@ import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+from apiclient.http import MediaFileUpload
 from google.oauth2.credentials import Credentials
 
 # If modifying these scopes, delete the file token.json.
@@ -44,14 +45,15 @@ class GoogleDrive:
             response = self.service.files().list(
                 q=f"parents = '{folder_id}'",
                 spaces='drive',
-                fields='nextPageToken, files(id, name, kind, mimeType, trashed, createdTime, owners)',
+                fields='nextPageToken, files(id, name, kind, mimeType, trashed, createdTime, owners, parents)',
                 pageToken=None).execute()
         else:
             response = self.service.files().list(
                 # q=f"parents = '{folder_id}'",
                 spaces='drive',
-                fields='nextPageToken, files(id, name, kind, mimeType, trashed, createdTime, owners)',
+                fields='nextPageToken, files(id, name, kind, mimeType, trashed, createdTime, owners, parents)',
                 pageToken=None).execute()
+        # Get array of the items
         items = response.get('files', [])
 
         folder_list = []
@@ -65,7 +67,46 @@ class GoogleDrive:
                     'file_kind': item['kind'],
                     'mime_type': item['mimeType'],
                     'trashed': item['trashed'],
-                    'created_time': item['createdTime']
+                    'created_time': item['createdTime'],
+                    'parents': item['parents']
                 }
             folder_list.append(folder_details)
         return folder_list
+
+    def upload_file(self, filename: str, path: str, folder_id: str):
+        """ Load a new file or update an existing one """
+        media = MediaFileUpload(f"{path}/{filename}", resumable=True)
+        response = self.service.files().list(
+            q=f"name='{filename}' and parents = '{folder_id}'",
+            spaces='drive',
+            fields='nextPageToken, files(id, name)',
+            pageToken=None).execute()
+
+        if len(response['files']) == 0:
+            # File was not found, so create a brand new file in the google drive
+            file_metadata = {
+                'name': filename,
+                'parents': [folder_id]
+            }
+            file = self.service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+            return file
+        else:
+            for myfile in response.get('files', []):
+                # Process changed files
+                update_file = self.service.files().update(
+                    fileId=myfile.get('id'),
+                    media_body=media, ).execute()
+
+            return "Updated"
+
+    def test_run(self, l: int):
+        # Call the Drive v3 API
+        results = self.service.files().list(
+            pageSize=l,
+            fields="nextPageToken, files(id, name)"
+        ).execute()
+        items = results.get('files', [])
+        if not items:
+            return "No items found"
+        else:
+            return items
