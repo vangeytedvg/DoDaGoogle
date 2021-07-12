@@ -14,7 +14,8 @@ class DodaListItem(QListWidgetItem):
                  file_kind="",
                  mime_type="",
                  trashed="",
-                 created_time=""):
+                 created_time="",
+                 parents=""):
         """
         Ctor
         :param owner_name:
@@ -35,3 +36,4 @@ class DodaListItem(QListWidgetItem):
         self.mime_type = mime_type
         self.trashed = trashed
         self.created_time = created_time
+        self.parents = parents
