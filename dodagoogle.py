@@ -192,6 +192,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
                                                      created_time=folder['created_time'])
             dodaListItem.setText(folder['filename'])
             dodaListItem.setFont(font)
+            # A folder?
             if icon_type.endswith(".folder"):
                 dodaListItem.setForeground(QColor('sea green'))
             dodaListItem.setIcon(ic)
