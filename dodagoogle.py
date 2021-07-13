@@ -126,6 +126,7 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         self.actionE_xit.triggered.connect(self.close)
         self.actionLoad_Files.triggered.connect(self.handle_load_files)
         self.actionUp.triggered.connect(self.handle_back)
+        self.actionUpload_files.triggered.connect(self.handle_upload_files)
 
     def handle_back(self):
         """
@@ -144,6 +145,12 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
             self.get_drive_contents(folder_id='')
             # Disable the back button
             self.actionUp.setEnabled(False)
+
+    def handle_upload_files(self):
+        """
+        Upload a file or folder to GoogleDrive
+        """
+        pass
 
     def get_drive_contents(self, folder_id):
         """

@@ -5,6 +5,7 @@ class DodaListItem(QListWidgetItem):
     """
         Sublassing QListWidgetItem so we can add some properties
         we need.
+        Author : Danny Van Geyte
     """
 
     def __init__(self, owner_name="",
