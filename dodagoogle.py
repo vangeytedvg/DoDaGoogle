@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QFrame, QLabel,
-                             QLineEdit, QToolBar, QSlider)
+                             QLineEdit, QToolBar, QSlider, QFileDialog)
 from PyQt5.QtGui import QIcon, QPixmap, QFont, QColor
 from PyQt5.QtCore import QByteArray, QSettings, Qt
 
@@ -150,6 +150,9 @@ class DodaGoogle(QMainWindow, Ui_MainWindow):
         """
         Upload a file or folder to GoogleDrive
         """
+        files = QFileDialog.getOpenFileNames(self, caption="Select file to upload", filter="*.*")
+        print(files)
+
         pass
 
     def get_drive_contents(self, folder_id):
